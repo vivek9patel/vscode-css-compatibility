@@ -1,36 +1,49 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-const vscode = require('vscode');
+const vscode = require("vscode");
+const path = require("path");
+const CanICode = require("./src/CanICode");
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
+  let disposables = [];
+  const canicode = new CanICode();
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "canicode" is now active!');
+  function provideHover(document, position, token) {
+    const range = document.getWordRangeAtPosition(position);
+    const word = document.getText(range);
+    const fileType = document.languageId;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('canicode.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+    const data = canicode.getCompatibilityData(word, fileType);
+    if (!data.table) return null;
+    const hoverContent = new vscode.MarkdownString();
+    hoverContent.appendCodeblock(word, fileType);
+    hoverContent.appendMarkdown(data.table);
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from CanICode!');
-	});
+    hoverContent.supportHtml = true;
+    hoverContent.isTrusted = true;
+    hoverContent.baseUri = vscode.Uri.file(
+      path.join(context.extensionPath, "images", path.sep)
+    );
 
-	context.subscriptions.push(disposable);
+    return new vscode.Hover(hoverContent, range);
+  }
+
+  disposables.push(
+    vscode.languages.registerHoverProvider("javascript", {
+      provideHover,
+    })
+  );
+
+  disposables.push(
+    vscode.languages.registerHoverProvider("css", {
+      provideHover,
+    })
+  );
+
+  context.subscriptions.push(...disposables);
 }
 
-// This method is called when your extension is deactivated
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+  activate,
+  deactivate,
+};
