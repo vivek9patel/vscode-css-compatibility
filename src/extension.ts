@@ -1,10 +1,25 @@
 import * as vscode from "vscode";
 import path = require("path");
-import CanICode from "./CanICode";
+import {
+  getCSSLanguageService,
+  LanguageService,
+  SymbolKind,
+} from "vscode-css-languageservice";
+
+// @ts-ignore
+import * as nodes from "vscode-css-languageservice/lib/esm/parser/cssNodes.js";
+// @ts-ignore
+import { CSSDataManager } from "vscode-css-languageservice/lib/esm/languageFacts/dataManager.js";
+import { TextDocument } from "vscode-css-languageservice";
+
+const languageServices: { [id: string]: LanguageService } = {
+  css: getCSSLanguageService(),
+};
+
+const cssDataManager = new CSSDataManager();
 
 function activate(context: vscode.ExtensionContext) {
   let disposables = [];
-  const canicode = new CanICode();
 
   disposables.push(
     vscode.languages.registerHoverProvider("css", {
@@ -15,35 +30,63 @@ function activate(context: vscode.ExtensionContext) {
       ) {
         const range = document.getWordRangeAtPosition(position);
         const word = document.getText(range);
-        const fileType = document.languageId;
-        const line = document.lineAt(position.line).text;
+        const languageService = languageServices[document.languageId];
+        if (!languageService) {
+          return;
+        }
 
-        const { table, mdn_url, description, notes } =
-          canicode.getCompatibilityData(word, line, fileType);
+        const cssDoc = languageService.parseStylesheet(document as any);
+        const offset = document.offsetAt(position);
+        const nodepath = nodes.getNodePath(cssDoc, offset);
+        for (let i = 0; i < nodepath.length; i++) {
+          const node = nodepath[i];
 
-        if (!table) return null;
+          if (node instanceof nodes.Selector) {
+            const selector = node.getText();
+            console.log("Selector: ", selector);
+            continue;
+          }
+    
+          if (node instanceof nodes.SimpleSelector) {
+            const selector = node.getText();
+            console.log("SimpleSelector: ", selector);
+            continue;
+          }
+
+          if (node instanceof nodes.Declaration) {
+            // done
+            const propertyName = node.getFullPropertyName();
+            console.log(
+              "propertyName: ",
+              cssDataManager.getProperty(propertyName)
+            );
+            continue;
+          }
+
+          if (node instanceof nodes.UnknownAtRule) {
+            const atRuleName = node.getText();
+            const entry = cssDataManager.getAtDirective(atRuleName);
+            console.log("atRuleName: ", entry);
+            continue;
+          }
+
+          if (
+            node instanceof nodes.Node &&
+            node.type === nodes.NodeType.PseudoSelector
+          ) {
+            // done
+            const selectorName = node.getText();
+            const entry =
+              selectorName.slice(0, 2) === "::"
+                ? cssDataManager.getPseudoElement(selectorName)
+                : cssDataManager.getPseudoClass(selectorName);
+            console.log("selectorName: ", entry);
+            continue;
+          }
+        }
 
         const hoverContent = new vscode.MarkdownString();
-        if (description) hoverContent.appendMarkdown(description);
-        else hoverContent.appendCodeblock(word, fileType);
-        hoverContent.appendMarkdown(table);
-        notes.forEach((note) => {
-          hoverContent.appendMarkdown(`${note}\n\n`);
-        });
-        if (mdn_url) {
-          hoverContent.appendMarkdown(
-            `<a href='https://developer.mozilla.org${mdn_url}'>See MDN documentation for '${word}'</a>`
-          );
-        }
-        // hoverContent.appendMarkdown(
-        //   "<img src='https://picsum.photos/200/300' height='200' />"
-        // );
-
-        hoverContent.supportHtml = true;
-        hoverContent.isTrusted = true;
-        hoverContent.baseUri = vscode.Uri.file(
-          path.join(context.extensionPath, "images", path.sep)
-        );
+        hoverContent.appendCodeblock("```css\n" + word + "\n```");
 
         return new vscode.Hover(hoverContent, range);
       },
