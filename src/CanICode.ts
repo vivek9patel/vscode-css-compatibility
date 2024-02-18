@@ -1,20 +1,15 @@
 import AGENTS from "./data/agents";
-import bcdPath from "./data/bcdPath";
-import { getBCDDataForPath } from "@mdn/bcd-utils-api";
+
 import {
-  BrowserName,
   CompatStatement,
   SupportBlock,
   SupportStatement,
   VersionValue,
 } from "@mdn/browser-compat-data/types";
 import {
-  Agents,
   BlockedClientName,
   ClientName,
-  ClientType,
   CompatibilityData,
-  Data,
 } from "./types";
 import {
   checkImage,
@@ -25,9 +20,9 @@ import {
   desktopImage,
   mobileImage,
 } from "./Icons";
+import findInCss from "./helpers/css";
 
 export default class CanICode {
-  private agents: Agents;
   private unsupportedBrowsers: BlockedClientName[] = [
     "ie",
     "deno",
@@ -35,13 +30,10 @@ export default class CanICode {
     "oculus",
   ];
 
-  constructor() {
-    this.agents = AGENTS;
-  }
-
   public getCompatibilityData(
+    code: string,
     word: string,
-    line: string,
+    offset: number,
     fileType: string
   ): CompatibilityData {
     let result: CompatibilityData = {
@@ -53,18 +45,15 @@ export default class CanICode {
     };
 
     if (fileType === "css") {
-      const wordInfo = this.findInCss(word, line);
-      if (wordInfo) {
-        const comapt = wordInfo.data.__compat as CompatStatement;
-        if (comapt) {
-          result = {
-            table: this.generateHTMLTable(comapt),
-            notes: this.getAllNotes(comapt.support),
-            deprecated: comapt.status?.deprecated,
-            mdn_url: comapt?.mdn_url,
-            description: comapt.description,
-          };
-        }
+      const results = findInCss(code, word, offset);
+      if (results && results.__compat) {
+        result = {
+          table: this.generateHTMLTable(results.__compat),
+          notes: this.getAllNotes(results.__compat.support),
+          deprecated: results.__compat.status?.deprecated,
+          mdn_url: results.__compat?.mdn_url,
+          description: results.__compat.description,
+        };
       }
     }
     return result;
@@ -78,7 +67,7 @@ export default class CanICode {
                               <th></th>
                               <th></th>
                               <th></th>
-                              <th align="center" colspan="${this.agents["desktop"].length}" title="desktop">
+                              <th align="center" colspan="${AGENTS["desktop"].length}" title="desktop">
                                 <span>${desktopImage}</span>
                               </th>
                               <th></th>
@@ -92,7 +81,7 @@ export default class CanICode {
                               <th></th>
                               <th></th>
                               <th></th>
-                              <th align="center" colspan="${this.agents["mobile"].length}" title="mobile">
+                              <th align="center" colspan="${AGENTS["mobile"].length}" title="mobile">
                                 <span>${mobileImage}</span>
                               </th>
                               <th></th>
@@ -111,7 +100,7 @@ export default class CanICode {
     let browserVersionsRow = "<tr><td align='center'> | </td>";
     let statusIconRow = "<tr><td align='center'> | </td>";
 
-    this.agents["desktop"].forEach((browser) => {
+    AGENTS["desktop"].forEach((browser) => {
       const icon: string = this.getIcon(support[browser.id]);
       const versionNumber: string = this.getVersionNumber(support[browser.id]);
       const isNotes: boolean =
@@ -123,7 +112,7 @@ export default class CanICode {
     });
     // statusIconRow += "<th> | </th>";
     // browserVersionsRow += "<th> | </th>";
-    this.agents["mobile"].forEach((browser) => {
+    AGENTS["mobile"].forEach((browser) => {
       const icon: string = this.getIcon(support[browser.id]);
       const versionNumber: string = this.getVersionNumber(support[browser.id]);
       const isNotes: boolean =
@@ -141,13 +130,13 @@ export default class CanICode {
 
   private getBrowserIconRow(): string {
     let iconsRow = "<tr><td align='center'> | </td>";
-    this.agents["desktop"].forEach((browser) => {
+    AGENTS["desktop"].forEach((browser) => {
       iconsRow += `<td align="center">
                   <span>${browserIcons[browser.id]}</span>
               </td><td align='center'> | </td>`;
     });
     // iconsRow += "<th> | </th>";
-    this.agents["mobile"].forEach((browser) => {
+    AGENTS["mobile"].forEach((browser) => {
       iconsRow += `<td align="center">
                   <span>${browserIcons[browser.id]}</span>
               </td><td align='center'> | </td>`;
@@ -208,29 +197,5 @@ export default class CanICode {
     } else {
       return checkImage;
     }
-  }
-
-  findSymbol(word: string): Data | void {
-    const path = bcdPath[word];
-    if (Array.isArray(path)) {
-      // TODO: return multiple bcd data
-      return undefined;
-    }
-    return getBCDDataForPath(path);
-  }
-
-  private findInCss(word: string, line: string): Data | void {
-    const symbols = line.split(";");
-
-    for (let i = 0; i < symbols.length; i++) {
-      const cssLine = symbols[i].split(":");
-      const parent = cssLine[0].trim();
-      const child = (cssLine[1] || "").trim();
-      if (parent === word) {
-        return this.findSymbol(parent);
-      }
-    }
-
-    return this.findSymbol(word);
   }
 }

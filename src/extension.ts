@@ -1,22 +1,6 @@
 import * as vscode from "vscode";
-import path = require("path");
-import {
-  getCSSLanguageService,
-  LanguageService,
-  SymbolKind,
-} from "vscode-css-languageservice";
-
-// @ts-ignore
-import * as nodes from "vscode-css-languageservice/lib/esm/parser/cssNodes.js";
-// @ts-ignore
-import { CSSDataManager } from "vscode-css-languageservice/lib/esm/languageFacts/dataManager.js";
-import { TextDocument } from "vscode-css-languageservice";
-
-const languageServices: { [id: string]: LanguageService } = {
-  css: getCSSLanguageService(),
-};
-
-const cssDataManager = new CSSDataManager();
+import path from "path";
+import CanICode from "./CanICode";
 
 function activate(context: vscode.ExtensionContext) {
   let disposables = [];
@@ -30,65 +14,32 @@ function activate(context: vscode.ExtensionContext) {
       ) {
         const range = document.getWordRangeAtPosition(position);
         const word = document.getText(range);
-        const languageService = languageServices[document.languageId];
-        if (!languageService) {
-          return;
-        }
 
-        const cssDoc = languageService.parseStylesheet(document as any);
         const offset = document.offsetAt(position);
-        const nodepath = nodes.getNodePath(cssDoc, offset);
-        for (let i = 0; i < nodepath.length; i++) {
-          const node = nodepath[i];
+        const canICode = new CanICode();
 
-          if (node instanceof nodes.Selector) {
-            const selector = node.getText();
-            console.log("Selector: ", selector);
-            continue;
-          }
-    
-          if (node instanceof nodes.SimpleSelector) {
-            const selector = node.getText();
-            console.log("SimpleSelector: ", selector);
-            continue;
+        const result = canICode.getCompatibilityData(document.getText(), word, offset, "css");
+        if (result.table){
+          const hoverContent = new vscode.MarkdownString();
+          hoverContent.appendCodeblock(word, "css");
+          hoverContent.appendMarkdown(result.table);
+          
+          if(result.deprecated){
+            hoverContent.appendMarkdown("Deprecated");
           }
 
-          if (node instanceof nodes.Declaration) {
-            // done
-            const propertyName = node.getFullPropertyName();
-            console.log(
-              "propertyName: ",
-              cssDataManager.getProperty(propertyName)
-            );
-            continue;
+          if(result.mdn_url){
+            hoverContent.appendMarkdown(`[MDN](${result.mdn_url})`);
           }
-
-          if (node instanceof nodes.UnknownAtRule) {
-            const atRuleName = node.getText();
-            const entry = cssDataManager.getAtDirective(atRuleName);
-            console.log("atRuleName: ", entry);
-            continue;
-          }
-
-          if (
-            node instanceof nodes.Node &&
-            node.type === nodes.NodeType.PseudoSelector
-          ) {
-            // done
-            const selectorName = node.getText();
-            const entry =
-              selectorName.slice(0, 2) === "::"
-                ? cssDataManager.getPseudoElement(selectorName)
-                : cssDataManager.getPseudoClass(selectorName);
-            console.log("selectorName: ", entry);
-            continue;
-          }
+      
+          hoverContent.supportHtml = true;
+          hoverContent.isTrusted = true;
+          hoverContent.baseUri = vscode.Uri.file(
+            path.join(context.extensionPath, "images", path.sep)
+          );
+      
+          return new vscode.Hover(hoverContent, range);
         }
-
-        const hoverContent = new vscode.MarkdownString();
-        hoverContent.appendCodeblock("```css\n" + word + "\n```");
-
-        return new vscode.Hover(hoverContent, range);
       },
     })
   );
