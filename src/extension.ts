@@ -21,7 +21,6 @@ function activate(context: vscode.ExtensionContext) {
         const result = canICode.getCompatibilityData(document.getText(), word, offset, "css");
         if (result.table){
           const hoverContent = new vscode.MarkdownString();
-          hoverContent.appendCodeblock(word, "css");
           hoverContent.appendMarkdown(result.table);
           
           if(result.deprecated){
@@ -29,7 +28,7 @@ function activate(context: vscode.ExtensionContext) {
           }
 
           if(result.mdn_url){
-            hoverContent.appendMarkdown(`[MDN](${result.mdn_url})`);
+            hoverContent.appendMarkdown(`</br><a href="${result.mdn_url}">Open MDN doc for '${word}'</a>`);
           }
       
           hoverContent.supportHtml = true;

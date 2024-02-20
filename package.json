@@ -51,7 +51,7 @@
     "webpack-cli": "^5.1.1"
   },
   "dependencies": {
-    "@mdn/browser-compat-data": "^5.3.5",
+    "@mdn/browser-compat-data": "^5.5.10",
     "@types/css-tree": "^2.3.6",
     "css-tree": "^2.3.1"
   }
