@@ -19,26 +19,28 @@ function activate(context: vscode.ExtensionContext) {
         const canICode = new CanICode();
 
         const result = canICode.getCompatibilityData(document.getText(), word, offset, "css");
-        if (result.table){
-          const hoverContent = new vscode.MarkdownString();
-          hoverContent.appendMarkdown(result.table);
-          
-          if(result.deprecated){
-            hoverContent.appendMarkdown("Deprecated");
-          }
 
-          if(result.mdn_url){
-            hoverContent.appendMarkdown(`</br><a href="${result.mdn_url}">Open MDN doc for '${word}'</a>`);
-          }
-      
-          hoverContent.supportHtml = true;
-          hoverContent.isTrusted = true;
-          hoverContent.baseUri = vscode.Uri.file(
-            path.join(context.extensionPath, "images", path.sep)
-          );
-      
-          return new vscode.Hover(hoverContent, range);
+        const hoverContent = new vscode.MarkdownString();
+
+        if (result.table){
+          hoverContent.appendMarkdown(result.table);
         }
+        
+        if(result.deprecated){
+          hoverContent.appendMarkdown("Deprecated");
+        }
+
+        if(result.mdn_url){
+          hoverContent.appendMarkdown(`</br><a href="${result.mdn_url+"#browser_compatibility"}">See full compatibility table for ${result.description ? result.description : word}</a>`);
+        }
+    
+        hoverContent.supportHtml = true;
+        hoverContent.isTrusted = true;
+        hoverContent.baseUri = vscode.Uri.file(
+          path.join(context.extensionPath, "images", path.sep)
+        );
+    
+        return new vscode.Hover(hoverContent, range);
       },
     })
   );
