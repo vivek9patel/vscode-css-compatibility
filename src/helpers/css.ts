@@ -1,7 +1,13 @@
 import {Identifier} from "@mdn/browser-compat-data/types";
 import bcd from "@mdn/browser-compat-data";
-import {parse, findAll, CssNode, MediaFeature, AttributeSelector, Combinator, FunctionNode} from 'css-tree';
+import {parse, findAll, CssNode, Atrule, MediaFeature, AttributeSelector, Combinator, FunctionNode, TypeSelector} from 'css-tree';
 import functions from "../data/functions.json";
+
+function handleAtRule(node: Atrule): Identifier | void{
+    if(node.name in bcd.css["at-rules"]){
+        return bcd.css["at-rules"][node.name];
+    }
+}
 
 function handleMediaFeatures(node: MediaFeature): Identifier | void{
     if(node.name in bcd.css["at-rules"]["media"]) return bcd.css["at-rules"]["media"][node.name];
@@ -49,14 +55,28 @@ function handleFunctions(node: FunctionNode): Identifier | void{
     } 
 }
 
-function getBCDdata(node: CssNode): Identifier | void{
+function handleUnicodeRange(): Identifier | void{
+    const compat = bcd.css["at-rules"]["font-face"]["unicode-range"];
+    compat.__compat!.description = "<code>unicode-range</code>";
+    return compat;
+}
+
+function handleTypeselector(node: TypeSelector): Identifier | void{
+    let compat = bcd.css.selectors.type;
+    if(node.name.includes("|")) {
+        compat = compat.namespaces;
+        compat.__compat!.mdn_url = "https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors#namespaces";
+    }
+    return compat;
+}
+
+function getBCDdata(node: CssNode): Identifier | null{
     // Css Node Types: https://github.com/csstree/csstree/blob/master/docs/ast.md
     try{
         switch(node.type){
             case "Atrule":
-                if(node.name in bcd.css["at-rules"]){
-                    return bcd.css["at-rules"][node.name];
-                }
+                const atrule = handleAtRule(node);
+                if(atrule) return atrule;
                 throw new Error();
             case "AttributeSelector":
                 const res = handleAttributeSelector(node);
@@ -83,23 +103,66 @@ function getBCDdata(node: CssNode): Identifier | void{
                 throw new Error();
             case "IdSelector":
                 return bcd.css.selectors.id;
+            case "Identifier": // TODO
+                // there should be no Identifier node type at this point
+                throw new Error();
+            // @ts-ignore this type does exists in documentation
+            case "NestingSelector":
+                return bcd.css.selectors.nesting;
+            case "Number":
+                return bcd.css.types.number;
+            case "Percentage":
+                return bcd.css.types.percentage;
+            case "PseudoClassSelector":
+                return bcd.css.selectors[node.name];
+            case "PseudoElementSelector":
+                return bcd.css.selectors[node.name];
+            case "Ratio":
+                return bcd.css.types.ratio;
+            case "SelectorList":
+                return bcd.css.selectors.list;
+            case "String":
+                return bcd.css.types.string;
+            case "TypeSelector":
+                const typeSelector = handleTypeselector(node);
+                if(typeSelector) return typeSelector;
+                throw new Error();
+            case "UnicodeRange":
+                const unicode = handleUnicodeRange();
+                if(unicode) return unicode;
+                throw new Error();
+            case "Url":
+                return bcd.css.types.url;
             default:
                 throw new Error();
         }
     }
     catch(e){
         console.log(`Type not found '${node.type}'`, node);
+        return null;
     }
-  }
+}
 
-function findInCss(code: string, word: string, offset: number): Identifier | void {
+function findAndGetNode(nodePath: CssNode[]): Identifier | null{
+    const declarationNode = nodePath.at(-3);
+    if(declarationNode) return getBCDdata(declarationNode);
+    return null;
+}
+
+function findInCss(code: string, word: string, offset: number): Identifier | null {
     const nodePath = findAll(parse(code, {positions: true}),(node, item, list) => {
         if(!node.loc) return false;
         return offset >= node.loc.start.offset && offset <= node.loc.end.offset;
     });
 
     const node = nodePath.at(-1);
-    if(node) return getBCDdata(node);
+    if(node){
+        if(node.type === "Identifier"){
+            return findAndGetNode(nodePath);
+        }
+        return getBCDdata(node);
+    }
+    return null;
 }
 
 export default findInCss;
