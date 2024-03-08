@@ -1,6 +1,6 @@
 import {Identifier} from "@mdn/browser-compat-data/types";
 import bcd from "@mdn/browser-compat-data";
-import {parse, findAll, CssNode, Atrule, MediaFeature, AttributeSelector, Combinator, FunctionNode, TypeSelector} from 'css-tree';
+import {parse, findAll, CssNode, Atrule, MediaFeature, AttributeSelector, Combinator, FunctionNode, TypeSelector, Identifier as IdentifierNode, Declaration} from 'css-tree';
 import functions from "../data/functions.json";
 
 function handleAtRule(node: Atrule): Identifier | void{
@@ -68,6 +68,33 @@ function handleTypeselector(node: TypeSelector): Identifier | void{
         compat.__compat!.mdn_url = "https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors#namespaces";
     }
     return compat;
+}
+
+function handleIdentifier(nodePath: CssNode[]): Identifier | null{
+    const declarationNode = nodePath.at(-3) as Declaration;
+    const identifierNode = nodePath.at(-1) as IdentifierNode;
+    if(declarationNode && identifierNode){
+        const declarationCompat = getBCDdata(declarationNode);
+        if(declarationCompat !== null && declarationCompat.hasOwnProperty(identifierNode.name)){
+            const identiferCompat = declarationCompat[identifierNode.name];
+            if(identiferCompat){
+                if(!identiferCompat.__compat?.description){
+                    identiferCompat.__compat!.description = declarationCompat.__compat!.description;
+                }
+                if(!identiferCompat.__compat?.mdn_url){
+                    identiferCompat.__compat!.mdn_url = declarationCompat.__compat!.mdn_url;
+                }
+                return identiferCompat;
+            }
+        }
+
+        if(!declarationCompat?.__compat?.description){
+            declarationCompat!.__compat!.description = declarationNode.property;
+        }
+        return declarationCompat;
+    }
+    console.log(`Type not found '${identifierNode.type}'`, identifierNode);
+    return null;
 }
 
 function getBCDdata(node: CssNode): Identifier | null{
@@ -143,12 +170,6 @@ function getBCDdata(node: CssNode): Identifier | null{
     }
 }
 
-function findAndGetNode(nodePath: CssNode[]): Identifier | null{
-    const declarationNode = nodePath.at(-3);
-    if(declarationNode) return getBCDdata(declarationNode);
-    return null;
-}
-
 function findInCss(code: string, word: string, offset: number): Identifier | null {
     const nodePath = findAll(parse(code, {positions: true}),(node, item, list) => {
         if(!node.loc) return false;
@@ -158,7 +179,7 @@ function findInCss(code: string, word: string, offset: number): Identifier | nul
     const node = nodePath.at(-1);
     if(node){
         if(node.type === "Identifier"){
-            return findAndGetNode(nodePath);
+            return handleIdentifier(nodePath);
         }
         return getBCDdata(node);
     }
