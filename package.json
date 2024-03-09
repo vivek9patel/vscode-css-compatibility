@@ -3,6 +3,7 @@
   "displayName": "CanICode CSS",
   "description": "Check, on hover, which CSS sytax, keywords, types or functions are compatible or supported with all browsers and thier versions.",
   "version": "0.0.1",
+  "repository": "https://github.com/vivek9patel/canicode-css",
   "publisher": "vivek9patel",
   "author": {
     "name": "Vivek Patel",
