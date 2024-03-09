@@ -1,7 +1,7 @@
 {
-  "name": "canicode",
-  "displayName": "CanICode",
-  "description": "An extension to check what functions and variables are compatible with what browsers with thier versions.",
+  "name": "canicode-css",
+  "displayName": "CanICode CSS",
+  "description": "Check, on hover, which CSS sytax, keywords, types or functions are compatible or supported with all browsers and thier versions.",
   "version": "0.0.1",
   "publisher": "vivek9patel",
   "author": {
@@ -15,10 +15,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact",
     "onLanguage:css"
   ],
   "main": "./dist/extension.js",
