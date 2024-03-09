@@ -1,0 +1,542 @@
+{
+  "scroll": {
+    "path": "css.properties.animation-timeline.scroll",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/animation-timeline/scroll"
+  },
+  "view": {
+    "path": "css.properties.animation-timeline.view",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/animation-timeline/view"
+  },
+  "jump": {
+    "path": "css.types.easing-function.steps.jump",
+    "mdn_url": null
+  },
+  "element": {
+    "path": "css.types.image.element",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/element"
+  },
+  "image-rect": {
+    "path": "css.properties.background-image.image-rect",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/-moz-image-rect"
+  },
+  "image-set": {
+    "path": "css.types.image.image-set",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/image/image-set"
+  },
+  "fit-content_function": {
+    "path": "css.properties.width.fit-content_function",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/width"
+  },
+  "path": {
+    "path": "css.types.basic-shape.path",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/path"
+  },
+  "calc_values": {
+    "path": "css.properties.gap.grid_context.calc_values",
+    "mdn_url": null
+  },
+  "url": {
+    "path": "css.properties.cursor.url",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/cursor"
+  },
+  "reversed": {
+    "path": "css.properties.counter-reset.reversed",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/counter-reset"
+  },
+  "url_positioning_syntax": {
+    "path": "css.properties.cursor.url_positioning_syntax",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/cursor"
+  },
+  "env": {
+    "path": "css.properties.custom-property.env",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/env()"
+  },
+  "var": {
+    "path": "css.properties.custom-property.var",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/var()"
+  },
+  "palette-mix_function": {
+    "path": "css.properties.font-palette.palette-mix_function",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-palette"
+  },
+  "annotation": {
+    "path": "css.properties.font-variant-alternates.annotation",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#annotation()"
+  },
+  "character_variant": {
+    "path": "css.properties.font-variant-alternates.character_variant",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#character-variant()"
+  },
+  "ornaments": {
+    "path": "css.properties.font-variant-alternates.ornaments",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#ornaments()"
+  },
+  "styleset": {
+    "path": "css.properties.font-variant-alternates.styleset",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#styleset()"
+  },
+  "stylistic": {
+    "path": "css.properties.font-variant-alternates.stylistic",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#stylistic()"
+  },
+  "swash": {
+    "path": "css.properties.font-variant-alternates.swash",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/font-variant-alternates#swash()"
+  },
+  "fit-content": {
+    "path": "css.properties.grid-template-rows.fit-content",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/fit-content"
+  },
+  "minmax": {
+    "path": "css.properties.grid-template-rows.minmax",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/minmax()"
+  },
+  "repeat": {
+    "path": "css.properties.grid-template-rows.repeat",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/repeat()"
+  },
+  "ray": {
+    "path": "css.types.ray",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/ray"
+  },
+  "circle": {
+    "path": "css.types.basic-shape.circle",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/basic-shape/circle"
+  },
+  "inset": {
+    "path": "css.types.basic-shape.inset",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/basic-shape/inset"
+  },
+  "polygon": {
+    "path": "css.types.basic-shape.polygon",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/basic-shape/polygon"
+  },
+  "regexp": {
+    "path": "css.at-rules.document.regexp",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/@document"
+  },
+  "calc": {
+    "path": "css.types.calc",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/calc"
+  },
+  "font-format": {
+    "path": "css.at-rules.supports.font-format",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/@supports"
+  },
+  "font-tech": {
+    "path": "css.at-rules.supports.font-tech",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/@supports"
+  },
+  "selector": {
+    "path": "css.at-rules.supports.selector",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/@supports"
+  },
+  "dir": {
+    "path": "css.selectors.dir",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:dir"
+  },
+  "has": {
+    "path": "css.selectors.has",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:has"
+  },
+  "highlight": {
+    "path": "css.selectors.highlight",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/::highlight"
+  },
+  "host-context": {
+    "path": "css.selectors.host-context",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:host-context"
+  },
+  "hostfunction": {
+    "path": "css.selectors.hostfunction",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:host()"
+  },
+  "is": {
+    "path": "css.selectors.is",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:is"
+  },
+  "lang": {
+    "path": "css.selectors.lang",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:lang"
+  },
+  "not": {
+    "path": "css.selectors.not",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:not"
+  },
+  "nth-child": {
+    "path": "css.selectors.nth-child",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:nth-child"
+  },
+  "nth-last-child": {
+    "path": "css.selectors.nth-last-child",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:nth-last-child"
+  },
+  "nth-last-of-type": {
+    "path": "css.selectors.nth-last-of-type",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:nth-last-of-type"
+  },
+  "nth-of-type": {
+    "path": "css.selectors.nth-of-type",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:nth-of-type"
+  },
+  "dom_api": {
+    "path": "css.selectors.scope.dom_api",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:scope"
+  },
+  "state": {
+    "path": "css.selectors.state",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:state"
+  },
+  "view-transition-group": {
+    "path": "css.selectors.view-transition-group",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/::view-transition-group"
+  },
+  "view-transition-image-pair": {
+    "path": "css.selectors.view-transition-image-pair",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/::view-transition-image-pair"
+  },
+  "view-transition-new": {
+    "path": "css.selectors.view-transition-new",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/::view-transition-new"
+  },
+  "view-transition-old": {
+    "path": "css.selectors.view-transition-old",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/::view-transition-old"
+  },
+  "where": {
+    "path": "css.selectors.where",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/:where"
+  },
+  "-moz-image-rect": {
+    "path": "css.types.-moz-image-rect",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/-moz-image-rect"
+  },
+  "abs": {
+    "path": "css.types.abs",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/abs"
+  },
+  "acos": {
+    "path": "css.types.acos",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/acos"
+  },
+  "asin": {
+    "path": "css.types.asin",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/asin"
+  },
+  "atan": {
+    "path": "css.types.atan",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/atan"
+  },
+  "atan2": {
+    "path": "css.types.atan2",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/atan2"
+  },
+  "attr": {
+    "path": "css.types.attr",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/attr"
+  },
+  "ellipse": {
+    "path": "css.types.basic-shape.ellipse",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/basic-shape/ellipse"
+  },
+  "rect": {
+    "path": "css.types.shape.rect",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/shape"
+  },
+  "xywh": {
+    "path": "css.types.basic-shape.xywh",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/basic-shape/xywh"
+  },
+  "nested": {
+    "path": "css.types.calc.nested",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/calc"
+  },
+  "clamp": {
+    "path": "css.types.clamp",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/clamp"
+  },
+  "color": {
+    "path": "css.types.color.color",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/color"
+  },
+  "relative_syntax": {
+    "path": "css.types.color.color.relative_syntax",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/color"
+  },
+  "color-contrast": {
+    "path": "css.types.color.color-contrast",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/color-contrast"
+  },
+  "color-mix": {
+    "path": "css.types.color.color-mix",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/color-mix"
+  },
+  "hsl": {
+    "path": "css.types.color.hsl",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/hsl"
+  },
+  "hwb": {
+    "path": "css.types.color.hwb",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/hwb"
+  },
+  "lab": {
+    "path": "css.types.color.lab",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/lab"
+  },
+  "lch": {
+    "path": "css.types.color.lch",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/lch"
+  },
+  "light-dark": {
+    "path": "css.types.color.light-dark",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/light-dark"
+  },
+  "oklab": {
+    "path": "css.types.color.oklab",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/oklab"
+  },
+  "oklch": {
+    "path": "css.types.color.oklch",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/oklch"
+  },
+  "rgb": {
+    "path": "css.types.color.rgb",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/color_value/rgb"
+  },
+  "cos": {
+    "path": "css.types.cos",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/cos"
+  },
+  "counter": {
+    "path": "css.types.counter",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/counter"
+  },
+  "counters": {
+    "path": "css.types.counters",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/counters"
+  },
+  "cubic-bezier": {
+    "path": "css.types.easing-function.cubic-bezier",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/easing-function"
+  },
+  "linear-function": {
+    "path": "css.types.easing-function.linear-function",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/easing-function"
+  },
+  "steps": {
+    "path": "css.types.easing-function.steps",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/easing-function"
+  },
+  "exp": {
+    "path": "css.types.exp",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/exp"
+  },
+  "blur": {
+    "path": "css.types.filter-function.blur",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/blur"
+  },
+  "brightness": {
+    "path": "css.types.filter-function.brightness",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/brightness"
+  },
+  "contrast": {
+    "path": "css.types.filter-function.contrast",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/contrast"
+  },
+  "drop-shadow": {
+    "path": "css.types.filter-function.drop-shadow",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/drop-shadow"
+  },
+  "grayscale": {
+    "path": "css.types.filter-function.grayscale",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/grayscale"
+  },
+  "hue-rotate": {
+    "path": "css.types.filter-function.hue-rotate",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/hue-rotate"
+  },
+  "invert": {
+    "path": "css.types.filter-function.invert",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/invert"
+  },
+  "opacity": {
+    "path": "css.types.filter-function.opacity",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/opacity"
+  },
+  "saturate": {
+    "path": "css.types.filter-function.saturate",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/saturate"
+  },
+  "sepia": {
+    "path": "css.types.filter-function.sepia",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/filter-function/sepia"
+  },
+  "hypot": {
+    "path": "css.types.hypot",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/hypot"
+  },
+  "cross-fade": {
+    "path": "css.types.image.cross-fade",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/cross-fade"
+  },
+  "conic-gradient": {
+    "path": "css.types.image.gradient.conic-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/conic-gradient"
+  },
+  "linear-gradient": {
+    "path": "css.types.image.gradient.linear-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/linear-gradient"
+  },
+  "radial-gradient": {
+    "path": "css.types.image.gradient.radial-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/radial-gradient"
+  },
+  "repeating-conic-gradient": {
+    "path": "css.types.image.gradient.repeating-conic-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/repeating-conic-gradient"
+  },
+  "repeating-linear-gradient": {
+    "path": "css.types.image.gradient.repeating-linear-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/repeating-linear-gradient"
+  },
+  "repeating-radial-gradient": {
+    "path": "css.types.image.gradient.repeating-radial-gradient",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/gradient/repeating-radial-gradient"
+  },
+  "image": {
+    "path": "css.types.image.image",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/image/image"
+  },
+  "paint": {
+    "path": "css.types.image.paint",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/image/paint"
+  },
+  "log": {
+    "path": "css.types.log",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/log"
+  },
+  "max": {
+    "path": "css.types.max",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/max"
+  },
+  "min": {
+    "path": "css.types.min",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/min"
+  },
+  "mod": {
+    "path": "css.types.mod",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/mod"
+  },
+  "pow": {
+    "path": "css.types.pow",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/pow"
+  },
+  "rem": {
+    "path": "css.types.rem",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/rem"
+  },
+  "round": {
+    "path": "css.types.round",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/round"
+  },
+  "sign": {
+    "path": "css.types.sign",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/sign()"
+  },
+  "sin": {
+    "path": "css.types.sin",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/sin"
+  },
+  "sqrt": {
+    "path": "css.types.sqrt",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/sqrt"
+  },
+  "tan": {
+    "path": "css.types.tan",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/tan"
+  },
+  "matrix": {
+    "path": "css.types.transform-function.matrix",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix"
+  },
+  "matrix3d": {
+    "path": "css.types.transform-function.matrix3d",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix3d"
+  },
+  "perspective": {
+    "path": "css.types.transform-function.perspective",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/perspective"
+  },
+  "rotate": {
+    "path": "css.types.transform-function.rotate",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate"
+  },
+  "rotate3d": {
+    "path": "css.types.transform-function.rotate3d",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate3d"
+  },
+  "rotateX": {
+    "path": "css.types.transform-function.rotateX",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateX"
+  },
+  "rotateY": {
+    "path": "css.types.transform-function.rotateY",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateY"
+  },
+  "rotateZ": {
+    "path": "css.types.transform-function.rotateZ",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateZ"
+  },
+  "scale": {
+    "path": "css.types.transform-function.scale",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/scale"
+  },
+  "scale3d": {
+    "path": "css.types.transform-function.scale3d",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/scale3d"
+  },
+  "scaleX": {
+    "path": "css.types.transform-function.scaleX",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleX"
+  },
+  "scaleY": {
+    "path": "css.types.transform-function.scaleY",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleY"
+  },
+  "scaleZ": {
+    "path": "css.types.transform-function.scaleZ",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleZ"
+  },
+  "skew": {
+    "path": "css.types.transform-function.skew",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/skew"
+  },
+  "skewX": {
+    "path": "css.types.transform-function.skewX",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/skewX"
+  },
+  "skewY": {
+    "path": "css.types.transform-function.skewY",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/skewY"
+  },
+  "translate": {
+    "path": "css.types.transform-function.translate",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/translate"
+  },
+  "translate3d": {
+    "path": "css.types.transform-function.translate3d",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/translate3d"
+  },
+  "translateX": {
+    "path": "css.types.transform-function.translateX",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/translateX"
+  },
+  "translateY": {
+    "path": "css.types.transform-function.translateY",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/translateY"
+  },
+  "translateZ": {
+    "path": "css.types.transform-function.translateZ",
+    "mdn_url": "https://developer.mozilla.org/docs/Web/CSS/transform-function/translateZ"
+  }
+}
