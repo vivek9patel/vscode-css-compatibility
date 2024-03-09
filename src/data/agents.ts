@@ -6,7 +6,6 @@ const AGENTS: Agents = {
     { id: "firefox", long_name: "Mozilla Firefox", name: "Firefox", icon: "f" },
     { id: "opera", long_name: "Opera", name: "Opera", icon: "o" },
     { id: "safari", long_name: "Safari", name: "Safari", icon: "s" },
-    { id: "edge", long_name: "Microsoft Edge", name: "Edge", icon: "e" },
   ],
   mobile: [
     {

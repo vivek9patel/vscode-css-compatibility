@@ -5,6 +5,7 @@ import {
   Browsers,
   SimpleSupportStatement,
   VersionValue,
+
 } from "@mdn/browser-compat-data/types";
 
 export type ClientType = Exclude<BrowserType, "xr" | "server">;
@@ -24,7 +25,7 @@ export type Agent = {
 
 export type CompatibilityData = {
   table: string | null;
-  deprecated: boolean | undefined;
+  status: CompatStatement["status"];
   mdn_url: CompatStatement["mdn_url"];
   notes: string[];
   description: CompatStatement["description"];

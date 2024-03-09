@@ -38,7 +38,11 @@ export default class CanICode {
   ): CompatibilityData {
     let result: CompatibilityData = {
       table: null,
-      deprecated: false,
+      status: {
+        standard_track: true,
+        experimental: false,
+        deprecated: false,
+      },
       mdn_url: undefined,
       notes: [],
       description: undefined,
@@ -50,7 +54,7 @@ export default class CanICode {
         result = {
           table: this.generateHTMLTable(results.__compat),
           notes: this.getAllNotes(results.__compat.support),
-          deprecated: results.__compat.status?.deprecated,
+          status: results.__compat.status,
           mdn_url: results.__compat?.mdn_url,
           description: results.__compat.description,
         };
@@ -62,7 +66,8 @@ export default class CanICode {
   private generateHTMLTable(comapt: CompatStatement): string {
     const rows = this.getTableRow(comapt);
 
-    const browserTypesRow = `<tr>
+    const browserTypesRow = `<tr></tr>
+                              <tr>
                               <th></th>
                               <th></th>
                               <th></th>
@@ -70,8 +75,6 @@ export default class CanICode {
                               <th align="center" colspan="${AGENTS["desktop"].length}" title="desktop">
                                 <span>${desktopImage}</span>
                               </th>
-                              <th></th>
-                              <th></th>
                               <th></th>
                               <th></th>
                               <th></th>
@@ -177,6 +180,7 @@ export default class CanICode {
   private getAllNotes(support: SupportBlock): string[] {
     const notes = new Set<string>();
     Object.keys(support).forEach((browser) => {
+      if(this.unsupportedBrowsers.includes(browser as BlockedClientName)) return;
       const browserSupport: SupportStatement | undefined =
         support[browser as ClientName];
       const browserNotes: string = this.getVersionNotes(browserSupport);
