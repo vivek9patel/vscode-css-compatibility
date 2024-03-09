@@ -31,7 +31,10 @@ function activate(context: vscode.ExtensionContext) {
         }
 
         if(result.mdn_url){
-          hoverContent.appendMarkdown(`</br><a href="${result.mdn_url+"#browser_compatibility"}">See full compatibility table for ${result.description ? result.description : word}</a>`);
+          hoverContent.appendMarkdown(`</br><a href="${result.mdn_url+"#browser_compatibility"}">See full compatibility table for ${result.description ? result.description : `<code>${word}</code>`}</a>`);
+        }
+        else if(result.description){
+          hoverContent.appendMarkdown(`</br>${result.description}`);
         }
     
         hoverContent.supportHtml = true;

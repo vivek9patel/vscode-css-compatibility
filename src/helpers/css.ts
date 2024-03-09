@@ -1,7 +1,33 @@
 import {Identifier} from "@mdn/browser-compat-data/types";
 import bcd from "@mdn/browser-compat-data";
 import {parse, findAll, CssNode, Atrule, MediaFeature, AttributeSelector, Combinator, FunctionNode, TypeSelector, Identifier as IdentifierNode, Declaration} from 'css-tree';
-import functions from "../data/functions.json";
+import FUNCTIONS from "../data/functions.json";
+
+function findByDeclaration(nodeToFind: IdentifierNode | FunctionNode, nodePath: CssNode[]): Identifier | void {
+    const declarationNode = nodePath.at(-3);
+    if(declarationNode){
+        if(declarationNode.type === "Declaration"){
+            const declarationCompat = handleDeclaration(declarationNode);
+            if(declarationCompat && declarationCompat.hasOwnProperty(nodeToFind.name)){
+                const identiferCompat = declarationCompat[nodeToFind.name];
+                if(identiferCompat){
+                    if(!identiferCompat.__compat?.description){
+                        identiferCompat.__compat!.description = declarationCompat.__compat!.description;
+                    }
+                    if(!identiferCompat.__compat?.mdn_url){
+                        identiferCompat.__compat!.mdn_url = declarationCompat.__compat!.mdn_url;
+                    }
+                    return identiferCompat;
+                }
+            }
+    
+            if(!declarationCompat?.__compat?.description){
+                declarationCompat!.__compat!.description = declarationNode.property;
+            }
+            return declarationCompat;
+        }
+    }
+}
 
 function handleAtRule(node: Atrule): Identifier | void{
     if(node.name in bcd.css["at-rules"]){
@@ -47,12 +73,18 @@ function handleCombinaor(node: Combinator): Identifier | void{
     }
 }
 
-function handleFunctions(node: FunctionNode): Identifier | void{
+function handleFunctions(node: FunctionNode, nodePath: CssNode[]): Identifier | void{
     if(node.name in bcd.css.types) return bcd.css.types[node.name];
-    if(node.name in functions) {
+    if(node.name in FUNCTIONS) {
         // @ts-ignore
-        return functions[node.name].split(".").reduce((o, k) => o ? o[k] : undefined, bcd);
-    } 
+        const compatData = FUNCTIONS[node.name].path.split(".").reduce((o, k) => o ? o[k] : undefined, bcd);
+        // @ts-ignore
+        compatData.__compat!.mdn_url = FUNCTIONS[node.name].mdn_url;
+        return compatData;
+    }
+
+    const identiferByDeclaration = findByDeclaration(node, nodePath);
+    if(identiferByDeclaration) return identiferByDeclaration;
 }
 
 function handleUnicodeRange(): Identifier | void{
@@ -70,34 +102,15 @@ function handleTypeselector(node: TypeSelector): Identifier | void{
     return compat;
 }
 
-function handleIdentifier(nodePath: CssNode[]): Identifier | null{
-    const declarationNode = nodePath.at(-3) as Declaration;
-    const identifierNode = nodePath.at(-1) as IdentifierNode;
-    if(declarationNode && identifierNode){
-        const declarationCompat = getBCDdata(declarationNode);
-        if(declarationCompat !== null && declarationCompat.hasOwnProperty(identifierNode.name)){
-            const identiferCompat = declarationCompat[identifierNode.name];
-            if(identiferCompat){
-                if(!identiferCompat.__compat?.description){
-                    identiferCompat.__compat!.description = declarationCompat.__compat!.description;
-                }
-                if(!identiferCompat.__compat?.mdn_url){
-                    identiferCompat.__compat!.mdn_url = declarationCompat.__compat!.mdn_url;
-                }
-                return identiferCompat;
-            }
-        }
-
-        if(!declarationCompat?.__compat?.description){
-            declarationCompat!.__compat!.description = declarationNode.property;
-        }
-        return declarationCompat;
-    }
-    console.log(`Type not found '${identifierNode.type}'`, identifierNode);
-    return null;
+function handleIdentifier(identifierNode: IdentifierNode, nodePath: CssNode[]): Identifier | void{
+    return findByDeclaration(identifierNode, nodePath);
 }
 
-function getBCDdata(node: CssNode): Identifier | null{
+function handleDeclaration(node: Declaration): Identifier | void{
+    return bcd.css.properties[node.property];
+}
+
+function getBCDdata(node: CssNode, nodePath: CssNode[]): Identifier | null{
     // Css Node Types: https://github.com/csstree/csstree/blob/master/docs/ast.md
     try{
         switch(node.type){
@@ -116,12 +129,13 @@ function getBCDdata(node: CssNode): Identifier | null{
                 if(comb) return comb;
                 throw new Error();
             case "Declaration":
-                if(node.property in bcd.css.properties) return bcd.css.properties[node.property];
+                const dec =  handleDeclaration(node);
+                if(dec) return dec;
                 throw new Error();
             case "Dimension":
                 return bcd.css.types.dimension;
             case "Function":
-                const func = handleFunctions(node);
+                const func = handleFunctions(node, nodePath);
                 if(func) return func;
                 throw new Error();
             case "MediaFeature":
@@ -130,8 +144,9 @@ function getBCDdata(node: CssNode): Identifier | null{
                 throw new Error();
             case "IdSelector":
                 return bcd.css.selectors.id;
-            case "Identifier": // TODO
-                // there should be no Identifier node type at this point
+            case "Identifier": 
+                const identifier = handleIdentifier(node, nodePath);
+                if(identifier) return identifier;
                 throw new Error();
             // @ts-ignore this type does exists in documentation
             case "NestingSelector":
@@ -178,10 +193,7 @@ function findInCss(code: string, word: string, offset: number): Identifier | nul
 
     const node = nodePath.at(-1);
     if(node){
-        if(node.type === "Identifier"){
-            return handleIdentifier(nodePath);
-        }
-        return getBCDdata(node);
+        return getBCDdata(node, nodePath);
     }
     return null;
 }
