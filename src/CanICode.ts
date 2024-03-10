@@ -10,28 +10,63 @@ import {
   BlockedClientName,
   ClientName,
   CompatibilityData,
+  Theme,
 } from "./types";
 import {
   checkImage,
   crossImage,
   testImage,
   aestricImage,
-  browserIcons,
+  browserIconsDark,
   desktopImage,
+  desktopImageLight,
   mobileImage,
+  mobileImageLight,
+  browserIconsLight,
 } from "./Icons";
 import findInCss from "./helpers/css";
+import { CssNode, parse } from "css-tree";
+import { TextDocument } from "vscode";
 
 export default class CanICode {
-  private unsupportedBrowsers: BlockedClientName[] = [
+  private iconpack = browserIconsDark;
+  private desktopIcon: string = desktopImage;
+  private mobileIcon: string = mobileImage;
+  private static _uri: string;
+  private static _version: number;
+  private parsedCSS: CssNode;
+  private static _instance: CanICode;
+  static _unsupportedBrowsers: BlockedClientName[] = [
     "ie",
     "deno",
     "nodejs",
     "oculus",
   ];
 
+  constructor(css: string) {
+    this.parsedCSS = parse(css, { positions: true });
+  }
+
+  public static _getInstance(document: TextDocument): CanICode{
+    const uri = document.uri.toString();
+    const version = document.version;
+    
+    if(uri === CanICode._uri && version === CanICode._version){
+      return CanICode._instance;
+    }
+    CanICode._uri = uri;
+    CanICode._version = version;
+    CanICode._instance = new CanICode(document.getText());
+    return CanICode._instance;
+  }
+
+  public setTheme(theme: Theme) {
+    this.desktopIcon = theme === "dark" ? desktopImage : desktopImageLight;
+    this.mobileIcon = theme === "dark" ? mobileImage : mobileImageLight;
+    if(theme === "light") this.iconpack = browserIconsLight;
+  }
+
   public getCompatibilityData(
-    code: string,
     word: string,
     offset: number,
     fileType: string
@@ -48,8 +83,8 @@ export default class CanICode {
       description: undefined,
     };
 
-    if (fileType === "css") {
-      const results = findInCss(code, word, offset);
+    if (fileType === "css" || fileType === "scss" || fileType === "less" || fileType === "sass") {
+      const results = findInCss(this.parsedCSS, word, offset);
       if (results && results.__compat) {
         result = {
           table: this.generateHTMLTable(results.__compat),
@@ -73,7 +108,7 @@ export default class CanICode {
                               <th></th>
                               <th></th>
                               <th align="center" colspan="${AGENTS["desktop"].length}" title="desktop">
-                                <span>${desktopImage}</span>
+                                <span>${this.desktopIcon}</span>
                               </th>
                               <th></th>
                               <th></th>
@@ -85,7 +120,7 @@ export default class CanICode {
                               <th></th>
                               <th></th>
                               <th align="center" colspan="${AGENTS["mobile"].length}" title="mobile">
-                                <span>${mobileImage}</span>
+                                <span>${this.mobileIcon}</span>
                               </th>
                               <th></th>
                               <th></th>
@@ -135,13 +170,13 @@ export default class CanICode {
     let iconsRow = "<tr><td align='center'> | </td>";
     AGENTS["desktop"].forEach((browser) => {
       iconsRow += `<td align="center">
-                  <span>${browserIcons[browser.id]}</span>
+                  <span>${this.iconpack[browser.id]}</span>
               </td><td align='center'> | </td>`;
     });
     // iconsRow += "<th> | </th>";
     AGENTS["mobile"].forEach((browser) => {
       iconsRow += `<td align="center">
-                  <span>${browserIcons[browser.id]}</span>
+                  <span>${this.iconpack[browser.id]}</span>
               </td><td align='center'> | </td>`;
     });
     iconsRow += "</tr>";
@@ -180,7 +215,7 @@ export default class CanICode {
   private getAllNotes(support: SupportBlock): string[] {
     const notes = new Set<string>();
     Object.keys(support).forEach((browser) => {
-      if(this.unsupportedBrowsers.includes(browser as BlockedClientName)) return;
+      if(CanICode._unsupportedBrowsers.includes(browser as BlockedClientName)) return;
       const browserSupport: SupportStatement | undefined =
         support[browser as ClientName];
       const browserNotes: string = this.getVersionNotes(browserSupport);

@@ -8,6 +8,7 @@ import {
 
 } from "@mdn/browser-compat-data/types";
 
+export type Theme = "dark" | "light";
 export type ClientType = Exclude<BrowserType, "xr" | "server">;
 export type BlockedClientName = "ie" | "deno" | "nodejs" | "oculus";
 export type ClientName = Exclude<BrowserName, BlockedClientName>;

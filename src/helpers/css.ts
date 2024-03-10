@@ -185,8 +185,8 @@ function getBCDdata(node: CssNode, nodePath: CssNode[]): Identifier | null{
     }
 }
 
-function findInCss(code: string, word: string, offset: number): Identifier | null {
-    const nodePath = findAll(parse(code, {positions: true}),(node, item, list) => {
+function findInCss(parsedCss: CssNode, word: string, offset: number): Identifier | null {
+    const nodePath = findAll(parsedCss,(node, item, list) => {
         if(!node.loc) return false;
         return offset >= node.loc.start.offset && offset <= node.loc.end.offset;
     });
