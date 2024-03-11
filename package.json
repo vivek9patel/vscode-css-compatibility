@@ -1,19 +1,36 @@
 {
-  "name": "canicode-css",
-  "displayName": "CanICode CSS",
+  "name": "vscode-css-compatibility",
+  "displayName": "CSS Compatibility",
   "description": "Check, on hover, which CSS sytax, keywords, types or functions are compatible or supported with all browsers and thier versions.",
-  "version": "0.0.1",
-  "repository": "https://github.com/vivek9patel/canicode-css",
+  "version": "1.0.0",
+  "repository": "https://github.com/vivek9patel/vscode-css-compatibility",
   "publisher": "vivek9patel",
   "author": {
     "name": "Vivek Patel",
-    "email": "vivek.p9737@gmail.com"
+    "email": "vivek.p9737@gmail.com",
+    "url": "https://www.linkedin.com/in/vivek9patel/"
   },
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
+  ],
+  "keywords": [
+    "css",
+    "scss",
+    "sass",
+    "less",
+    "definition",
+    "hover",
+    "style",
+    "stylesheet",
+    "get compatibility",
+    "css compatibility",
+    "css cross browser compatibility",
+    "browser compatibility",
+    "css for cross browser compatibility",
+    "css transition cross browser"
   ],
   "activationEvents": [
     "onLanguage:css",
