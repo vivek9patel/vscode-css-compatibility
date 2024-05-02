@@ -7,8 +7,6 @@ import {
   VersionValue,
 } from "@mdn/browser-compat-data/types";
 import {
-  BlockedClientName,
-  ClientName,
   CompatibilityData,
   Theme,
 } from "./types";
@@ -36,12 +34,6 @@ export default class CanICode {
   private static _version: number;
   private parsedCSS: CssNode;
   private static _instance: CanICode;
-  static _unsupportedBrowsers: BlockedClientName[] = [
-    "ie",
-    "deno",
-    "nodejs",
-    "oculus",
-  ];
 
   constructor(css: string) {
     this.parsedCSS = parse(css, { positions: true });
@@ -100,32 +92,29 @@ export default class CanICode {
 
   private generateHTMLTable(comapt: CompatStatement): string {
     const rows = this.getTableRow(comapt);
-
+    const emptyDesktopHeaders = AGENTS["desktop"].map((browser) => `<th></th>`);
+    const emptyMobileHeaders = AGENTS["mobile"].map((browser) => `<th></th>`);
     const browserTypesRow = `<tr></tr>
                               <tr>
-                              <th></th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
+                              ${
+                                emptyDesktopHeaders.join("")
+                              }
                               <th align="center" colspan="${AGENTS["desktop"].length}" title="desktop">
                                 <span>${this.desktopIcon}</span>
                               </th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
+                              ${
+                                emptyDesktopHeaders.slice(0,-1).join("")
+                              }
                               <th> | </th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
+                              ${
+                                emptyMobileHeaders.join("")
+                              }
                               <th align="center" colspan="${AGENTS["mobile"].length}" title="mobile">
                                 <span>${this.mobileIcon}</span>
                               </th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
-                              <th></th>
+                              ${
+                                emptyMobileHeaders.join("")
+                              }
                             </tr>`;
     return `<table><thead>${browserTypesRow}</thead><tbody>${rows}</tbody></table>`;
   }
@@ -215,9 +204,8 @@ export default class CanICode {
   private getAllNotes(support: SupportBlock): string[] {
     const notes = new Set<string>();
     Object.keys(support).forEach((browser) => {
-      if(CanICode._unsupportedBrowsers.includes(browser as BlockedClientName)) return;
       const browserSupport: SupportStatement | undefined =
-        support[browser as ClientName];
+        support[browser as keyof SupportBlock];
       const browserNotes: string = this.getVersionNotes(browserSupport);
       if (browserNotes.length > 0) {
         notes.add(browserNotes);

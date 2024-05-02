@@ -1,8 +1,8 @@
-import { ClientName } from "../types";
+import { BrowserName } from "@mdn/browser-compat-data";
 
 const ICON_SIZE = 16;
 
-export const browserIconsDark: Record<ClientName, string> = {
+export const browserIconsDark: Record<BrowserName, string> = {
   chrome: `<img width=${ICON_SIZE} src='chrome.svg'/>`,
   chrome_android: `<img width=${ICON_SIZE} src='chrome.svg'/>`,
   edge: `<img width=${ICON_SIZE} src='edge.svg'/>`,
@@ -14,9 +14,13 @@ export const browserIconsDark: Record<ClientName, string> = {
   safari_ios: `<img width=${ICON_SIZE} src='safari.svg'/>`,
   samsunginternet_android: `<img width=${ICON_SIZE} src='samsunginternet.svg'/>`,
   webview_android: `<img width=${ICON_SIZE} src='webview.svg'/>`,
+  deno: `<img width=${ICON_SIZE} src='deno.svg'/>`,
+  nodejs: `<img width=${ICON_SIZE} src='nodejs.svg'/>`,
+  ie: `<img width=${ICON_SIZE} src='ie.svg'/>`,
+  oculus: `<img width=${ICON_SIZE} src='oculus.svg'/>`,
 };
 
-export const browserIconsLight: Record<ClientName, string> = {
+export const browserIconsLight: Record<BrowserName, string> = {
   chrome: `<img width=${ICON_SIZE} src='chrome_light.svg'/>`,
   chrome_android: `<img width=${ICON_SIZE} src='chrome_light.svg'/>`,
   edge: `<img width=${ICON_SIZE} src='edge_light.svg'/>`,
@@ -28,6 +32,10 @@ export const browserIconsLight: Record<ClientName, string> = {
   safari_ios: `<img width=${ICON_SIZE} src='safari_light.svg'/>`,
   samsunginternet_android: `<img width=${ICON_SIZE} src='samsunginternet_light.svg'/>`,
   webview_android: `<img width=${ICON_SIZE} src='webview_light.svg'/>`,
+  deno: `<img width=${ICON_SIZE} src='deno_light.svg'/>`,
+  nodejs: `<img width=${ICON_SIZE} src='nodejs_light.svg'/>`,
+  ie: `<img width=${ICON_SIZE} src='ie_light.svg'/>`,
+  oculus: `<img width=${ICON_SIZE} src='oculus_light.svg'/>`,
 };
 
 export const testImage = `<img width=${ICON_SIZE} src='test.svg'/>`;

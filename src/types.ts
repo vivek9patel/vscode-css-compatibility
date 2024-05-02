@@ -10,15 +10,13 @@ import {
 
 export type Theme = "dark" | "light";
 export type ClientType = Exclude<BrowserType, "xr" | "server">;
-export type BlockedClientName = "ie" | "deno" | "nodejs" | "oculus";
-export type ClientName = Exclude<BrowserName, BlockedClientName>;
 
 export type Agents = {
   [key in ClientType]: Agent[];
 };
 
 export type Agent = {
-  id: ClientName;
+  id: BrowserName;
   long_name: string;
   name: string;
   icon: string;
