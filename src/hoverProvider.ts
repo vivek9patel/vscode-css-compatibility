@@ -14,9 +14,12 @@ export default function provideHover(
   const word = document.getText(range);
   const offset = document.offsetAt(position);
   const theme = vscode.window.activeColorTheme.kind === vscode.ColorThemeKind.Dark ? "dark" : "light";
+  const userConfig = vscode.workspace.getConfiguration("css.compatibility");
   
   const canICode = CanICode._getInstance(document);
   canICode.setTheme(theme);
+  canICode.setUserConfig(userConfig);
+
   const result = canICode.getCompatibilityData(word, offset, fileType);
 
   const hoverContent = new vscode.MarkdownString();

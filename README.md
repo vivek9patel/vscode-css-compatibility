@@ -23,6 +23,11 @@ CSS Compatibility Checker is a Visual Studio Code extension designed to assist d
 - **Cross-Browser Support**: Access compatibility data for multiple browsers and their versions.
 - **Seamless Integration**: Integrate seamlessly with your existing Visual Studio Code workflow, enhancing your development process without disrupting your productivity.
 
+With version 1.0.2, you can now enable or disable any browser type from which you want to check compatibility for CSS from your vscode's settings.
+
+![configuration](https://github.com/vivek9patel/vscode-css-compatibility/raw/main/images/vscode-settings.png)
+
+
 ## Installation
 1. Open Visual Studio Code.
 2. Go to the Extensions view by clicking on the square icon in the sidebar.
@@ -32,6 +37,7 @@ CSS Compatibility Checker is a Visual Studio Code extension designed to assist d
 ## Usage
 1. Open a CSS/SCSS/LESS file in Visual Studio Code.
 2. Hover over any CSS syntax, keyword, type, or function to view compatibility information.
+3. You can enable/disable what browser type you want to check compatibility for in your vscode's settings file under "CSS Compatibility" configuration.
 3. Use the provided information to make informed decisions about which CSS features to use in your projects.
 
 ## Contributing

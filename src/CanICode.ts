@@ -7,7 +7,11 @@ import {
   VersionValue,
 } from "@mdn/browser-compat-data/types";
 import {
+  Agents,
   CompatibilityData,
+  DesktopBrowser,
+  EnabledBrowser,
+  MobileBrowser,
   Theme,
 } from "./types";
 import {
@@ -24,7 +28,8 @@ import {
 } from "./Icons";
 import findInCss from "./helpers/css";
 import { CssNode, parse } from "css-tree";
-import { TextDocument } from "vscode";
+import { TextDocument, WorkspaceConfiguration } from "vscode";
+import DEFAULT_USER_CONFIG from "./data/defaultConfig";
 
 export default class CanICode {
   private iconpack = browserIconsDark;
@@ -34,9 +39,12 @@ export default class CanICode {
   private static _version: number;
   private parsedCSS: CssNode;
   private static _instance: CanICode;
+  private enabledBrowser: EnabledBrowser = DEFAULT_USER_CONFIG;
+  private agents: Agents = AGENTS;
 
   constructor(css: string) {
     this.parsedCSS = parse(css, { positions: true });
+    this.setUserConfig();
   }
 
   public static _getInstance(document: TextDocument): CanICode{
@@ -56,6 +64,30 @@ export default class CanICode {
     this.desktopIcon = theme === "dark" ? desktopImage : desktopImageLight;
     this.mobileIcon = theme === "dark" ? mobileImage : mobileImageLight;
     if(theme === "light") this.iconpack = browserIconsLight;
+  }
+
+  public setUserConfig(userConfig: WorkspaceConfiguration | void){
+    const desktopAgents = userConfig && userConfig.desktop || {};
+    const mobileAgents = userConfig && userConfig.mobile || {};
+    AGENTS["desktop"].forEach((browser) => {
+      this.enabledBrowser.desktop[browser.id as DesktopBrowser] = desktopAgents[browser.id] ? true : false;
+    });
+    AGENTS["mobile"].forEach((browser) => {
+      this.enabledBrowser.mobile[browser.id as MobileBrowser] = mobileAgents[browser.id] ? true : false;
+    });
+
+    this.updateAgents();
+  }
+
+  private updateAgents() {
+    this.agents = {
+      desktop: AGENTS["desktop"].filter((agent) =>
+        this.enabledBrowser.desktop[agent.id as DesktopBrowser]
+      ),
+      mobile: AGENTS["mobile"].filter((agent) =>
+        this.enabledBrowser.mobile[agent.id as MobileBrowser]
+      ),
+    };
   }
 
   public getCompatibilityData(
@@ -92,14 +124,14 @@ export default class CanICode {
 
   private generateHTMLTable(comapt: CompatStatement): string {
     const rows = this.getTableRow(comapt);
-    const emptyDesktopHeaders = AGENTS["desktop"].map((browser) => `<th></th>`);
-    const emptyMobileHeaders = AGENTS["mobile"].map((browser) => `<th></th>`);
+    const emptyDesktopHeaders = this.agents["desktop"].map((browser) => `<th></th>`);
+    const emptyMobileHeaders = this.agents["mobile"].map((browser) => `<th></th>`);
     const browserTypesRow = `<tr></tr>
                               <tr>
                               ${
                                 emptyDesktopHeaders.join("")
                               }
-                              <th align="center" colspan="${AGENTS["desktop"].length}" title="desktop">
+                              <th align="center" colspan="${this.agents["desktop"].length}" title="desktop">
                                 <span>${this.desktopIcon}</span>
                               </th>
                               ${
@@ -109,7 +141,7 @@ export default class CanICode {
                               ${
                                 emptyMobileHeaders.join("")
                               }
-                              <th align="center" colspan="${AGENTS["mobile"].length}" title="mobile">
+                              <th align="center" colspan="${this.agents["mobile"].length}" title="mobile">
                                 <span>${this.mobileIcon}</span>
                               </th>
                               ${
@@ -127,7 +159,7 @@ export default class CanICode {
     let browserVersionsRow = "<tr><td align='center'> | </td>";
     let statusIconRow = "<tr><td align='center'> | </td>";
 
-    AGENTS["desktop"].forEach((browser) => {
+    this.agents["desktop"].forEach((browser) => {
       const icon: string = this.getIcon(support[browser.id]);
       const versionNumber: string = this.getVersionNumber(support[browser.id]);
       const isNotes: boolean =
@@ -139,7 +171,7 @@ export default class CanICode {
     });
     // statusIconRow += "<th> | </th>";
     // browserVersionsRow += "<th> | </th>";
-    AGENTS["mobile"].forEach((browser) => {
+    this.agents["mobile"].forEach((browser) => {
       const icon: string = this.getIcon(support[browser.id]);
       const versionNumber: string = this.getVersionNumber(support[browser.id]);
       const isNotes: boolean =
@@ -157,13 +189,13 @@ export default class CanICode {
 
   private getBrowserIconRow(): string {
     let iconsRow = "<tr><td align='center'> | </td>";
-    AGENTS["desktop"].forEach((browser) => {
+    this.agents["desktop"].forEach((browser) => {
       iconsRow += `<td align="center">
                   <span>${this.iconpack[browser.id]}</span>
               </td><td align='center'> | </td>`;
     });
     // iconsRow += "<th> | </th>";
-    AGENTS["mobile"].forEach((browser) => {
+    this.agents["mobile"].forEach((browser) => {
       iconsRow += `<td align="center">
                   <span>${this.iconpack[browser.id]}</span>
               </td><td align='center'> | </td>`;

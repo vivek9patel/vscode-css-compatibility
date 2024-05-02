@@ -11,6 +11,9 @@ import {
 export type Theme = "dark" | "light";
 export type ClientType = Exclude<BrowserType, "xr" | "server">;
 
+export type DesktopBrowser = "chrome" | "firefox" | "opera" | "safari" | "edge" | "ie" | "oculus";
+export type MobileBrowser = "chrome_android" | "firefox_android" | "opera_android" | "safari_ios" | "samsunginternet_android" | "webview_android";
+
 export type Agents = {
   [key in ClientType]: Agent[];
 };
@@ -44,4 +47,9 @@ export interface CompatStatementExtended extends CompatStatement {
 }
 export interface IdentifierExtended {
   [key: string]: IdentifierExtended | CompatStatementExtended;
+}
+
+export type EnabledBrowser = {
+  desktop: Record<DesktopBrowser, boolean>;
+  mobile: Record<MobileBrowser, boolean>;
 }

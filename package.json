@@ -2,7 +2,7 @@
   "name": "vscode-css-compatibility",
   "displayName": "CSS Compatibility",
   "description": "Check, on hover, which CSS sytax, keywords, types or functions are compatible or supported with all browsers and thier versions.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icon": "images/icon.png",
   "repository": "https://github.com/vivek9patel/vscode-css-compatibility",
   "publisher": "vivek9patel",
@@ -43,6 +43,76 @@
   "contributes": {
     "capabilities": {
       "hoverProvider": "true"
+    },
+    "configuration": {
+      "title": "CSS Compatibility",
+      "properties": {
+        "css.compatibility.desktop.chrome": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Google Chrome"
+        },
+        "css.compatibility.desktop.firefox": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Mozilla Firefox"
+        },
+        "css.compatibility.desktop.safari": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Apple Safari"
+        },
+        "css.compatibility.desktop.opera": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Opera"
+        },
+        "css.compatibility.desktop.edge": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Microsoft Edge"
+        },
+        "css.compatibility.desktop.ie": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable compatibility for Internet Explorer"
+        },
+        "css.compatibility.desktop.oculus": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable compatibility for Oculus"
+        },
+        "css.compatibility.mobile.chrome_android": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Samsung"
+        },
+        "css.compatibility.mobile.firefox_android": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Mozilla Firefox"
+        },
+        "css.compatibility.mobile.safari_ios": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Apple Safari"
+        },
+        "css.compatibility.mobile.opera_android": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Opera"
+        },
+        "css.compatibility.mobile.samsunginternet_android": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable compatibility for Samsung Internet"
+        },
+        "css.compatibility.mobile.webview_android": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable compatibility for Android Webview"
+        }
+      }
     }
   },
   "scripts": {
