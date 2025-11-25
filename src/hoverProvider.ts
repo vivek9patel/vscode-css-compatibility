@@ -52,7 +52,7 @@ export default function provideHover(
   }
 
   if(result.mdn_url){
-    hoverContent.appendMarkdown(`<a href="${result.mdn_url}">See MDN documentaion for ${result.description ? result.description : `<strong><code>${word}</code></strong>`}</a>`);
+    hoverContent.appendMarkdown(`<a href="${result.mdn_url}">See MDN documentation for ${result.description ? result.description : `<strong><code>${word}</code></strong>`}</a>`);
   }
   else if(result.description){
     hoverContent.appendMarkdown(`<strong><code>${result.description}</strong></code>`);
