@@ -1,5 +1,5 @@
-![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/vivek9patel.vscode-css-compatibility?logo=visualstudiocode)
-![Visual Studio Marketplace Version (including pre-releases)](https://img.shields.io/visual-studio-marketplace/v/vivek9patel.vscode-css-compatibility?logo=visualstudiocode)
+[![Installs](https://vsmarketplacebadges.dev/installs-short/vivek9patel.vscode-css-compatibility.svg)](https://marketplace.visualstudio.com/items?itemName=vivek9patel.vscode-css-compatibility)
+[![Version](https://vsmarketplacebadges.dev/version-short/vivek9patel.vscode-css-compatibility.svg)](https://marketplace.visualstudio.com/items?itemName=vivek9patel.vscode-css-compatibility)
 [![Open VSX](https://img.shields.io/badge/Open%20VSX-vscode--css--compatibility-purple)](https://open-vsx.org/extension/vivek9patel/vscode-css-compatibility)
 # CSS Compatibility VScode
 
